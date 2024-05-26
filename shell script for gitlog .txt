@@ -1,0 +1,19 @@
+!/bin/bash
+
+
+REPO_URL="https://github.com/RajNThakkar/calculator_dotnet.git"
+DEST_DIR="/home/ec2-user/shell/repo"
+DATE=$(date +'%d%m%Y')
+
+git clone "$REPO_URL" "$DEST_DIR"
+
+
+cd "$DEST_DIR"
+
+#switch dev/calculator repository 
+git checkout origin/dev/calculator
+
+
+git log -n 5 --name-only --pretty=format:"%an" >/home/ec2-user/shell/gitlog_"$DATE".txt
+
+rm -rf /home/ec2-user/shell/repo 
