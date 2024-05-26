@@ -5,8 +5,8 @@
 	<groupId>com.cruds.demo</groupId>
 	<artifactId>calcwebapp</artifactId>
 	<packaging>war</packaging>
-	<version>0.0.1-SNAPSHOT</version>
-	<name>calcwebapp Maven Webapp</name>
+	<version>0.0.1-calcwebapp</version>
+	<name>Jenkins_Java_project</name>
 	<url>http://maven.apache.org</url>
 
 	<properties>
