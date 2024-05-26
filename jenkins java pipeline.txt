@@ -1,0 +1,47 @@
+pipeline {
+    agent any
+    stages {
+        stage('checkout') {
+            steps {
+                ws('D:\\java_jenkins\\calculator') {
+                    git branch: 'Dev/calculator_java', credentialsId: 'efdcf100-9332-4953-85e0-999e94d6dc35', url: 'https://github.com/RajNThakkar/calculator_java.git'
+                }
+            }
+        }
+         stage('build and Package') {
+            steps {
+                 ws('D:\\java_jenkins\\calculator') {
+                bat 'mvn package'    
+		            echo "Maven Package Goal Executed Successfully!";
+                 }
+            }
+        }
+		stage('SonarQube analysis') {
+            steps {
+				 ws('D:\\java_jenkins\\calculator') {
+		// Change this as per your Jenkins Configuration
+                withSonarQubeEnv('My SonarQube Server') {
+                    bat 'mvn package sonar:sonar'
+                }
+				 }
+            }
+        }
+		
+		 stage('upload build artifacts') {
+		             
+            steps {
+                ws('D:\\calculator\\calculator\\calculator') {
+                bat 'scp -i C:\\Users\\Raj\\Downloads\\latest.pem "D:\\java_jenkins\\calculator\\target\\*.war" ec2-user@ec2-65-2-33-105.ap-south-1.compute.amazonaws.com:/opt/apache-tomcat-9.0.89/webapps'
+                }       
+            }
+        }
+		stage('Clean up checkout') {
+            steps {
+               bat 'rd /s /q  D:\\java_jenkins'
+            }
+        }
+		
+		
+        }
+    }
+
