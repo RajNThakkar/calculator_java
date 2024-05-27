@@ -19,7 +19,7 @@ pipeline {
 		stage('SonarQube analysis') {
             steps {
 				 ws('D:\\java_jenkins\\calculator') {
-		// Change this as per your Jenkins Configuration
+		
                 withSonarQubeEnv('My SonarQube Server') {
                     bat 'mvn package sonar:sonar'
                 }
